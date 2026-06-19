@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Delegar el pensamiento: IA, poder y soberanía cognitiva | Artux</title>
+  <meta name="description" content="Ensayo sobre inteligencia artificial, poder, soberanía cognitiva, software libre, democracia y la tensión entre eficiencia y eficacia." />
+  <meta name="author" content="Andrés Scheffer" />
+  <meta property="og:title" content="Delegar el pensamiento: IA, poder y soberanía cognitiva" />
+  <meta property="og:description" content="La IA como disputa política por las mediaciones del pensamiento." />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="assets/img/delegar-pensamiento-ia.jpg" />
+  <style>
+    :root {
+      color-scheme: dark light;
+      --font-display: "Arial Black", "Impact", "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+      --font-body: "Helvetica Neue", Arial, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: Georgia, "Times New Roman", serif;
+      --font-mono: "SFMono-Regular", "Roboto Mono", Consolas, Menlo, monospace;
+      --max: 1040px;
+      --measure: 780px;
+      --radius: 0px;
+      --shadow: none;
+    }
+
+    html[data-theme="dark"] {
+      --bg: #0a0a09;
+      --bg-2: #11100e;
+      --paper: #141311;
+      --paper-2: #1b1915;
+      --ink: #f4efe5;
+      --ink-soft: rgba(244, 239, 229, .82);
+      --muted: #a9a095;
+      --faint: rgba(244, 239, 229, .075);
+      --line: rgba(244, 239, 229, .20);
+      --line-strong: rgba(244, 239, 229, .42);
+      --accent: #ff4b2b;
+      --accent-2: #f0c24d;
+      --accent-3: #f4efe5;
+      --accent-soft: rgba(255, 75, 43, .13);
+      --accent-2-soft: rgba(240, 194, 77, .12);
+      --quote-bg: #0f0e0c;
+      --selection: rgba(255, 75, 43, .42);
+      --btn-bg: rgba(244, 239, 229, .05);
+      --btn-active: rgba(255, 75, 43, .18);
+    }
+
+    html[data-theme="light"] {
+      --bg: #f2eadc;
+      --bg-2: #fff9ef;
+      --paper: #fff6e8;
+      --paper-2: #efe4d1;
+      --ink: #11100d;
+      --ink-soft: rgba(17, 16, 13, .78);
+      --muted: #71685d;
+      --faint: rgba(17, 16, 13, .065);
+      --line: rgba(17, 16, 13, .20);
+      --line-strong: rgba(17, 16, 13, .44);
+      --accent: #d83b24;
+      --accent-2: #9b6f00;
+      --accent-3: #11100d;
+      --accent-soft: rgba(216, 59, 36, .11);
+      --accent-2-soft: rgba(155, 111, 0, .10);
+      --quote-bg: #f6ebd8;
+      --selection: rgba(216, 59, 36, .25);
+      --btn-bg: rgba(17, 16, 13, .045);
+      --btn-active: rgba(216, 59, 36, .14);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, var(--faint) 1px, transparent 1px),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+      background-size: 72px 72px, auto;
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 8%, var(--accent-soft), transparent 34rem),
+        radial-gradient(circle at 88% 14%, var(--accent-2-soft), transparent 30rem);
+      opacity: .95;
+      z-index: -1;
+    }
+
+    a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: .22em; }
+    a:hover { color: var(--accent-2); }
+    ::selection { background: var(--selection); }
+
+    .article-piece {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: clamp(22px, 4vw, 48px) 0 clamp(56px, 8vw, 100px);
+    }
+
+    .theme-controls {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: clamp(24px, 5vw, 58px);
+    }
+
+    .theme-button {
+      appearance: none;
+      width: 42px;
+      height: 42px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: var(--btn-bg);
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1;
+      padding: 0;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+    }
+
+    .theme-button:hover {
+      transform: translateY(-1px);
+      color: var(--ink);
+      border-color: var(--accent-2);
+      background: var(--btn-active);
+    }
+
+    .theme-button.is-active {
+      color: var(--ink);
+      border-color: var(--accent);
+      background: var(--btn-active);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+
+    article {
+      position: relative;
+      border: 1px solid var(--line-strong);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.025), transparent 240px),
+        var(--paper);
+      box-shadow: 16px 16px 0 var(--accent);
+    }
+
+    .article-inner {
+      padding: clamp(28px, 6vw, 76px);
+    }
+
+    header {
+      position: relative;
+      padding-bottom: clamp(26px, 5vw, 48px);
+      border-bottom: 2px solid var(--line-strong);
+    }
+
+    .article-kicker,
+    .section-label,
+    .pill,
+    blockquote cite,
+    .source-card li {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+    }
+
+    .article-kicker {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 980px;
+      font-family: var(--font-display);
+      font-size: clamp(48px, 10vw, 122px);
+      line-height: .86;
+      letter-spacing: -.075em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .title-outline {
+      display: block;
+      margin-top: .14em;
+      color: transparent;
+      -webkit-text-stroke: 1.2px var(--ink);
+      text-stroke: 1.2px var(--ink);
+      letter-spacing: -.065em;
+    }
+
+    .article-dek {
+      max-width: 820px;
+      margin: clamp(24px, 4vw, 38px) 0 0;
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 2.6vw, 31px);
+      line-height: 1.25;
+      color: var(--ink-soft);
+    }
+
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      border: 1px solid var(--line);
+      padding: 6px 10px;
+      font-size: 10px;
+      color: var(--muted);
+      background: var(--paper-2);
+    }
+
+    .hero-visual {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-height: clamp(260px, 42vw, 470px);
+      margin: clamp(28px, 5vw, 56px) 0 clamp(30px, 5vw, 60px);
+      border: 1px solid var(--line-strong);
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255,75,43,.85), transparent 32%),
+        radial-gradient(circle at 72% 28%, rgba(240,194,77,.88), transparent 18%),
+        radial-gradient(circle at 22% 72%, rgba(244,239,229,.18), transparent 24%),
+        linear-gradient(120deg, #090909 0%, #181410 56%, #2a170f 100%);
+      isolation: isolate;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mix-blend-mode: overlay;
+      opacity: .58;
+    }
+
+    .hero-visual::after {
+      content: "IA / PODER / SOBERANÍA";
+      position: absolute;
+      left: clamp(18px, 4vw, 42px);
+      bottom: clamp(18px, 4vw, 38px);
+      max-width: 700px;
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 80px);
+      line-height: .9;
+      letter-spacing: -.05em;
+      color: rgba(244,239,229,.92);
+      text-transform: uppercase;
+      z-index: 1;
+    }
+
+    .hero-visual figcaption {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      z-index: 2;
+      max-width: 340px;
+      margin: 0;
+      padding: 8px 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #f4efe5;
+      background: rgba(0,0,0,.52);
+      border: 1px solid rgba(244,239,229,.28);
+    }
+
+    .lead-box {
+      max-width: var(--measure);
+      margin: 0 auto clamp(36px, 6vw, 70px);
+      padding: clamp(22px, 4vw, 36px);
+      border-left: 8px solid var(--accent);
+      background: var(--paper-2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .lead-box p {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 1.22;
+      color: var(--ink);
+    }
+
+    .article-section {
+      max-width: var(--measure);
+      margin: 0 auto;
+      padding: clamp(44px, 7vw, 82px) 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 13px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 32px;
+      height: 2px;
+      background: var(--accent);
+      display: inline-block;
+    }
+
+    h2 {
+      margin: 0 0 clamp(20px, 3vw, 30px);
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5.4vw, 68px);
+      line-height: .9;
+      letter-spacing: -.055em;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin: 0 0 1.22em;
+      font-size: clamp(17px, 1.45vw, 20px);
+      line-height: 1.78;
+      color: var(--ink-soft);
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    .concept {
+      color: var(--ink);
+      font-weight: 900;
+      letter-spacing: .015em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, transparent 56%, var(--accent-soft) 56%);
+      padding: 0 .06em;
+    }
+
+    .concept.blue,
+    .concept.green {
+      color: var(--ink);
+      background: linear-gradient(180deg, transparent 56%, var(--accent-2-soft) 56%);
+    }
+
+    blockquote {
+      position: relative;
+      margin: clamp(30px, 5vw, 50px) 0;
+      padding: clamp(24px, 4vw, 38px) clamp(22px, 4vw, 42px);
+      border-top: 4px solid var(--accent);
+      border-bottom: 1px solid var(--line-strong);
+      background: var(--quote-bg);
+    }
+
+    blockquote::before {
+      content: "“";
+      position: absolute;
+      top: -30px;
+      left: 18px;
+      font-family: var(--font-serif);
+      font-size: 92px;
+      line-height: 1;
+      color: var(--accent);
+      opacity: .75;
+    }
+
+    blockquote p {
+      position: relative;
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 3.4vw, 40px);
+      line-height: 1.18;
+      color: var(--ink);
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 18px;
+      color: var(--accent-2);
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 900;
+    }
+
+    .source-card {
+      max-width: var(--measure);
+      margin: clamp(28px, 5vw, 60px) auto 0;
+      padding: clamp(24px, 4vw, 40px);
+      border: 1px solid var(--line-strong);
+      border-left: 8px solid var(--accent-2);
+      background: var(--paper-2);
+    }
+
+    .source-card h2 {
+      margin-bottom: 20px;
+      font-size: clamp(24px, 4vw, 42px);
+      letter-spacing: -.04em;
+    }
+
+    .source-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .source-card li {
+      font-size: 11px;
+      line-height: 1.55;
+      color: var(--muted);
+      letter-spacing: .08em;
+    }
+
+
+
+    .callout {
+      margin: clamp(30px, 5vw, 50px) 0;
+      padding: clamp(22px, 4vw, 34px);
+      border: 1px solid var(--line-strong);
+      border-left: 8px solid var(--accent);
+      background: linear-gradient(90deg, var(--accent-soft), transparent 82%), var(--paper-2);
+    }
+
+    .callout-title {
+      display: inline-block;
+      margin-bottom: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .article-foot {
+      width: min(var(--max), calc(100% - 32px));
+      margin: clamp(30px, 5vw, 52px) auto 0;
+      padding: 18px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px 24px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      line-height: 1.5;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .article-foot span {
+      display: inline-block;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 760px) {
+      .article-piece { width: min(100% - 18px, var(--max)); padding-top: 14px; }
+      .theme-controls { justify-content: flex-end; margin-bottom: 18px; }
+      .theme-button { width: 38px; height: 38px; font-size: 17px; }
+      article { box-shadow: 8px 8px 0 var(--accent); }
+      .article-inner { padding: 24px 18px 42px; }
+      h1 { font-size: clamp(44px, 16vw, 74px); }
+      .article-dek { font-size: 20px; }
+      .hero-visual { min-height: 300px; }
+      .hero-visual::after { font-size: 42px; max-width: 300px; }
+      .hero-visual figcaption { left: 12px; right: 12px; top: 12px; max-width: none; }
+      p { font-size: 17px; }
+      .article-foot { width: min(100% - 18px, var(--max)); display: grid; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="article-piece">
+    <div class="theme-controls" aria-label="Selector de paleta visual">
+      <button class="theme-button is-active" type="button" data-theme-choice="dark" aria-label="Activar modo oscuro" title="Modo oscuro">☾<span class="sr-only">Modo oscuro</span></button>
+      <button class="theme-button" type="button" data-theme-choice="light" aria-label="Activar modo claro" title="Modo claro">☀<span class="sr-only">Modo claro</span></button>
+    </div>
+
+    <article>
+      <div class="article-inner">
+        <header>
+          <span class="article-kicker">IA · Poder · Democracia</span>
+          <h1>Delegar el pensamiento <span class="title-outline">IA, poder y soberanía cognitiva</span></h1>
+          <p class="article-dek">Una lectura ético-política sobre la inteligencia artificial, la delegación cognitiva, el software libre y la tensión decisiva entre eficiencia técnica y eficacia democrática.</p>
+          <div class="article-meta" aria-label="Metadatos del artículo">
+            <span class="pill">Ensayo</span>
+            <span class="pill">Andrés Scheffer</span>
+            <span class="pill">Lectura crítica</span>
+          </div>
+        </header>
+
+        <figure class="hero-visual" role="img" aria-label="Composición abstracta sobre inteligencia artificial, redes de datos y soberanía cognitiva">
+          <figcaption>Soberanía Cognitiva · Infraestructura · Poder Algorítmico</figcaption>
+        </figure>
+
+        <div class="lead-box">
+          <p>La pregunta decisiva no es si la <span class="concept blue">Inteligencia Artificial</span> es eficiente. Es si resulta eficaz para una vida democrática, libre y socialmente justa.</p>
+        </div>
+
+        <section class="article-section">
+          <span class="section-label">01 · Choque de racionalidades</span>
+          <h2>Eficiencia / eficacia</h2>
+          <p>La inteligencia artificial no es solo un problema técnico. Su irrupción masiva nos obliga a formular una pregunta más antigua y más incómoda: quién controla las mediaciones a través de las cuales pensamos, decidimos, recordamos, trabajamos y nos vinculamos. La IA llega envuelta en la promesa de la <span class="concept">Eficiencia</span>: producir más rápido, automatizar lo tedioso, ordenar el caos informativo, anticipar conductas, abaratar costos. Esa promesa es real. Pero la pregunta decisiva no es si la IA es eficiente. Es si resulta eficaz para una vida democrática, libre y socialmente justa.</p>
+          <p>La distinción no es un juego de palabras: es un choque entre dos racionalidades. La <span class="concept">Eficiencia</span> pertenece al orden de los medios: acelera, abarata, automatiza, optimiza. La <span class="concept green">Eficacia Democrática</span> pertenece al orden de los fines: pregunta si aquello que hacemos vuelve más libre, más justa o más democrática una forma de vida. El problema aparece cuando la eficiencia deja de ser instrumento y se convierte en criterio rector. Lo que no se puede medir se vuelve irrelevante; lo que no se puede optimizar se vuelve invisible; la deliberación política queda reemplazada por administración técnica.</p>
+          <blockquote>
+            <p>Una tecnología puede asistir el pensamiento y, sin que lo notemos, empezar a ocupar su lugar.</p>
+            <cite>Tesis del artículo</cite>
+          </blockquote>
+          <p>Por eso una misma tecnología puede ser extraordinariamente eficiente para una corporación y, al mismo tiempo, corrosiva para la autonomía social. Puede elevar la productividad y expandir la vigilancia. Puede personalizar la información y encerrar al sujeto en una burbuja que le devuelve siempre su propio reflejo. Puede asistir el pensamiento y, sin que lo notemos, empezar a ocupar su lugar.</p>
+        </section>
+
+        <section class="article-section">
+          <span class="section-label">02 · El nudo</span>
+          <h2>Delegación Cognitiva</h2>
+          <p>Ahí aparece el verdadero nudo: la <span class="concept blue">Delegación Cognitiva</span>. Hemos empezado a ceder a sistemas artificiales tareas que durante siglos formaron parte de lo que entendíamos por pensar: escribir, buscar, sintetizar, traducir, recordar, calcular, elegir, juzgar. Conviene no demonizar el gesto. Toda cultura se levantó sobre herramientas que extendían la inteligencia humana, de la escritura al ábaco. El problema no es delegar; es delegar a ciegas.</p>
+          <p>La delegación puede ampliar capacidades cuando libera tiempo, multiplica acceso al conocimiento o permite resolver tareas que antes estaban fuera de nuestro alcance. Pero se vuelve políticamente peligrosa cuando ocurre dentro de infraestructuras opacas, privadas y concentradas en muy pocas manos. Entonces ya no usamos una herramienta: dependemos de sistemas cuyos criterios no podemos comprender, discutir ni impugnar.</p>
+          <blockquote>
+            <p>La cuestión no es si la máquina piensa, sino quién gobierna la máquina que empieza a intervenir en nuestro modo de pensar.</p>
+            <cite>IA y poder cognitivo</cite>
+          </blockquote>
+        </section>
+
+        <section class="article-section">
+          <span class="section-label">03 · Autonomía psíquica y política</span>
+          <h2>Soberanía Cognitiva</h2>
+          <p>Frente a eso, conviene recuperar y precisar un concepto: <span class="concept green">Soberanía Cognitiva</span>. En su formulación más simple, nombra la capacidad de un individuo, una comunidad o incluso una nación para gobernar su propio conocimiento, su atención y sus procesos de decisión. Juan Ruocco la define como una forma de autonomía psíquica frente a tecnologías que disputan atención, deseo, memoria y criterio. El término sirve porque desplaza la discusión desde el uso individual de herramientas hacia el gobierno político de las mediaciones que estructuran la conciencia.</p>
+          <p>No se trata de una pureza imposible del pensamiento, como si alguna vez hubiéramos pensado sin lenguaje, instituciones, archivos o tecnologías. Se trata de conservar poder crítico sobre las mediaciones que organizan nuestra relación con lo real.</p>
+          <p>La soberanía cognitiva implica al menos cuatro dimensiones. Primero, saber cuándo una mediación técnica interviene en nuestro pensamiento. Segundo, comprender, aunque sea parcialmente, los criterios con los que esa mediación selecciona, ordena o recomienda información. Tercero, conservar capacidad de juicio frente a sus respuestas. Cuarto, disponer de mecanismos colectivos para auditar, modificar, rechazar o disputar sus efectos. Sin esas condiciones, la delegación deja de ser ampliación de capacidades y se convierte en transferencia de poder.</p>
+        </section>
+
+        <section class="article-section">
+          <span class="section-label">04 · Cuerpos, conductas, deseo</span>
+          <h2>Poder, control y psicopolítica</h2>
+          <p>Esta disputa no aparece en el vacío. Foucault mostró cómo el poder moderno administró cuerpos y poblaciones mediante instituciones, saberes y normas. Deleuze advirtió que las sociedades disciplinarias, organizadas alrededor de espacios cerrados como la escuela, la fábrica o el cuartel, cedían lugar a formas de control continuo, flexible y a distancia. Byung-Chul Han describió una psicopolítica donde el sujeto interioriza el mandato de rendimiento y se explota a sí mismo bajo la apariencia de libertad.</p>
+          <p>La IA agrega una capa nueva a esa genealogía. Ya no organiza solamente cuerpos, conductas o deseos: empieza a intervenir en las condiciones mismas bajo las cuales algo nos parece pensable, recordable o verdadero. No modula solo lo que vemos, sino también cómo buscamos, cómo escribimos, cómo sintetizamos, cómo decidimos y qué nos resulta verosímil.</p>
+          <p>Por eso la soberanía cognitiva no puede reducirse a una higiene individual de la atención, aunque también la incluya. No alcanza con apagar el teléfono, administrar mejor el tiempo de pantalla o elegir con cuidado a qué exponerse. La cuestión es política y colectiva: ninguna información es neutral, toda infraestructura organiza intereses, y cuando las mediaciones del pensamiento pertenecen a un puñado de actores privados, la pregunta por quién controla esas mediaciones deja de ser un asunto personal.</p>
+        </section>
+
+        <section class="article-section">
+          <span class="section-label">05 · Materialidad oculta</span>
+          <h2>Datos y trabajo invisible</h2>
+          <p>No basta con usar la IA “de manera responsable” si los modelos, los datos, los criterios de optimización y las condiciones de uso resultan inauditables. La democracia no puede reducirse a consumir servicios inteligentes diseñados por actores privados que convierten la experiencia humana en datos, los datos en predicción y la predicción en renta. Si los datos son una forma de memoria social, su concentración privada implica que una parte de la experiencia colectiva queda convertida en activo corporativo.</p>
+          <blockquote>
+            <p>La máquina parece autónoma porque alguien, en algún lugar, fue cuidadosamente vuelto invisible.</p>
+            <cite>Trabajo oculto e infraestructura</cite>
+          </blockquote>
+          <p>Tampoco debe olvidarse que la inteligencia artificial no flota en una nube inmaterial. Descansa sobre una cadena concreta de trabajo humano, extracción de datos, consumo energético, infraestructura, hardware, etiquetado, moderación y corrección invisible. Lo que se nos presenta como automatización pura suele estar sostenido por tareas humanas precarizadas o borradas del relato oficial.</p>
+        </section>
+
+        <section class="article-section">
+          <span class="section-label">06 · Libertad tecnológica</span>
+          <h2>Software Libre / Open Source</h2>
+          <p>En este punto, la tradición del <span class="concept">Software Libre</span> y del <span class="concept blue">Código Abierto</span> recobra una vigencia inesperada. No como nostalgia técnica ni como romanticismo hacker, sino como paradigma político de autonomía. El software libre formula el problema en términos ético-políticos: una comunidad debe poder usar, estudiar, modificar y compartir las herramientas de las que depende. El código abierto, aunque muchas veces más pragmático, aporta otro principio decisivo: revisión pública, colaboración distribuida, trazabilidad del desarrollo y mejora colectiva de una herramienta.</p>
+          <p>Aplicado a la IA, este principio se vuelve todavía más exigente. Ya no alcanza con abrir una parte del código o publicar una interfaz amable. Una inteligencia artificial compatible con una sociedad democrática debería permitir algún grado real de auditoría sobre sus componentes decisivos: arquitectura, datos de entrenamiento, criterios de evaluación, documentación técnica, licencias, procesos de ajuste, límites de uso, mecanismos de corrección, sesgos conocidos y responsabilidades institucionales.</p>
+          <p>La apertura, sin embargo, no resuelve por sí sola todos los problemas de la IA. No elimina automáticamente los sesgos, no garantiza justicia, no distribuye de manera equitativa el poder computacional, no resuelve el impacto ambiental ni impide usos dañinos. Pero sin algún grado real de apertura, auditabilidad y control social, ni siquiera existe el terreno mínimo para discutir esos problemas democráticamente.</p>
+        </section>
+
+        <section class="article-section">
+          <span class="section-label">07 · Antidemocracia de élite</span>
+          <h2>La libertad de los dueños</h2>
+          <p>La pregunta, entonces, incomoda a la industria: ¿puede existir una inteligencia artificial democrática sin auditabilidad, sin control comunitario, sin estándares abiertos y sin soberanía tecnológica? Si el software propietario ya amenazaba la libertad del usuario al impedirle estudiar y modificar herramientas centrales de su vida digital, la IA propietaria radicaliza esa amenaza: ya no limita únicamente lo que podemos hacer con una herramienta, sino lo que esa herramienta puede hacer con nuestro lenguaje, nuestra memoria y nuestra capacidad de juicio.</p>
+          <p>Esta tensión permite entender por qué la discusión sobre IA no puede separarse de la ideología de sus propietarios. Peter Thiel condensó brutalmente esa posición cuando afirmó que ya no creía compatibles la libertad y la democracia. La frase importa menos como provocación individual que como síntoma de una racionalidad más amplia: para una parte del poder tecnológico, la democracia aparece como freno, demora, interferencia; la libertad, en cambio, como capacidad de escapar de la regulación colectiva.</p>
+          <blockquote>
+            <p>La disputa real es entre dos formas de libertad: la libertad privada de los dueños para escapar de la democracia y la libertad colectiva de una sociedad para gobernar las tecnologías que organizan su pensamiento.</p>
+            <cite>La libertad de los dueños</cite>
+          </blockquote>
+          <p>No se trata de la libertad de los usuarios para comprender y modificar las herramientas de las que dependen, sino de la libertad de los dueños para desplegar infraestructuras sin someter sus fines a deliberación pública. En la tradición del software libre, la libertad tecnológica apunta a distribuir poder: usar, estudiar, modificar, compartir, auditar, abandonar. En el libertarianismo tecnológico de élite, la libertad tiende a concentrarlo: fundar plataformas, crear mercados, capturar datos, evitar regulaciones, construir zonas de excepción.</p>
+        </section>
+
+        <section class="article-section">
+          <span class="section-label">08 · Un derecho incómodo</span>
+          <h2>Derecho a no delegar</h2>
+          <p>Por eso el debate sobre la IA no debería agotarse en la regulación estatal ni en el entusiasmo por la innovación. Tiene que interrogar lo que casi nunca llega a los titulares: la propiedad de la infraestructura, la concentración del poder computacional, el origen de los datos, el trabajo invisible que entrena a los modelos, las licencias, los estándares, la vigilancia, el impacto democrático y la erosión posible de nuestras propias habilidades cognitivas.</p>
+          <p>También debería incluir un derecho que rara vez aparece en las discusiones tecnológicas: el <span class="concept green">Derecho a no Delegar</span>. Soberanía cognitiva no significa solo acceso a herramientas más potentes. Significa también no quedar obligado a pensar, trabajar, aprender, crear, decidir o ser evaluado bajo las condiciones de una herramienta ajena. Una sociedad democrática debe poder decidir qué tareas quiere automatizar, cuáles no, qué capacidades desea preservar y qué formas de juicio no está dispuesta a entregar.</p>
+          <div class="callout">
+            <span class="callout-title">Punto clave</span>
+            <p>Una comunidad que terceriza lectura, escritura, memoria y síntesis sin formar criterio crítico no gana inteligencia colectiva: cambia comprensión por asistencia.</p>
+          </div>
+          <p>No se trata de rechazar la IA, sino de disputar sus fines y sus condiciones de existencia. Una IA políticamente deseable no sería la más rápida, ni la más rentable, ni la más predictiva, sino la capaz de ampliar autonomía, conocimiento común y deliberación democrática.</p>
+        </section>
+
+        <section class="article-section">
+          <span class="section-label">09 · Preguntar por el rumbo</span>
+          <h2>Cierre</h2>
+          <p>La verdadera pregunta, entonces, no es si la IA va a transformar la sociedad. Ya lo está haciendo. La pregunta es si esa transformación ampliará nuestra soberanía cognitiva o convertirá el pensamiento en un servicio tercerizado bajo control corporativo.</p>
+          <p>La eficiencia puede acelerar procesos, reducir costos y multiplicar productividad. Pero no puede decidir por sí misma qué fines merecen ser perseguidos. Puede optimizar una política justa o perfeccionar una forma de dominación. Puede hacer más rápido el bien común o volver más rentable la obediencia. La eficiencia no pregunta: ejecuta.</p>
+          <p>La eficacia democrática empieza donde la eficiencia se detiene: en la pregunta por el para qué. Para qué automatizar, para qué delegar, para qué producir más, para qué pensar con máquinas si eso implica dejar de comprender las condiciones de nuestro propio pensamiento.</p>
+          <blockquote>
+            <p>La eficiencia perfecciona el movimiento. La eficacia democrática pregunta por el rumbo. Y esa pregunta, justamente, es la que ningún dueño del poder debería responder por nosotros.</p>
+            <cite>Conclusión</cite>
+          </blockquote>
+        </section>
+
+        <section class="source-card" aria-labelledby="fuentes-title">
+          <h2 id="fuentes-title">Fuentes y referencias</h2>
+          <ol>
+            <li>Juan Ruocco, “Soberanía Cognitiva: introducción a la autonomía psíquica”, <a href="https://www.421.news/es/soberania-cognitiva-introduccion-autonomia-psiquica/" rel="noopener" target="_blank">421.news</a>.</li>
+            <li>Peter Thiel, “The Education of a Libertarian”, <a href="https://www.cato-unbound.org/2009/04/13/peter-thiel/education-libertarian/" rel="noopener" target="_blank">Cato Unbound</a>.</li>
+            <li>Richard Stallman, “Free Software Definition” y ensayos sobre software libre, GNU / Free Software Foundation.</li>
+            <li>Michel Foucault, Gilles Deleuze y Byung-Chul Han como marco teórico sobre biopolítica, sociedades de control y psicopolítica.</li>
+          </ol>
+        </section>
+      </div>
+    </article>
+
+    <div class="article-foot">
+      <span>Artux · Ensayo</span>
+      <span>IA · Poder · Soberanía Cognitiva</span>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const buttons = Array.from(document.querySelectorAll('[data-theme-choice]'));
+      const key = 'artux-article-theme';
+
+      function applyTheme(choice) {
+        const theme = choice === 'light' ? 'light' : 'dark';
+        root.setAttribute('data-theme', theme);
+        buttons.forEach(btn => btn.classList.toggle('is-active', btn.dataset.themeChoice === theme));
+        localStorage.setItem(key, theme);
+      }
+
+      buttons.forEach(btn => btn.addEventListener('click', () => applyTheme(btn.dataset.themeChoice)));
+      applyTheme(localStorage.getItem(key) === 'light' ? 'light' : 'dark');
+    })();
+  </script>
+</body>
+</html>
